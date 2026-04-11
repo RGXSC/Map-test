@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CycloPOI - Points d'intérêt pour cyclistes</title>
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <aside id="sidebar">
+    <header class="sidebar-header">
+      <h1 data-i18n="title">CycloPOI</h1>
+      <div class="lang-switcher">
+        <button data-lang="fr" class="active">FR</button>
+        <button data-lang="en">EN</button>
+      </div>
+    </header>
+
+    <section class="panel">
+      <h2 data-i18n="upload">Charger une trace GPX</h2>
+      <label class="file-drop" id="file-drop">
+        <input type="file" id="gpx-input" accept=".gpx,application/gpx+xml" hidden />
+        <span data-i18n="dropHint">Cliquez ou glissez un fichier .gpx ici</span>
+      </label>
+      <p id="track-info" class="track-info"></p>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="searchRadius">Rayon de recherche</h2>
+      <div class="slider-row">
+        <input type="range" id="radius" min="1" max="10" step="1" value="3" />
+        <span id="radius-value">3 km</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="categories">Catégories</h2>
+      <div id="categories-list" class="categories-list"></div>
+    </section>
+
+    <section class="panel">
+      <button id="search-btn" class="btn-primary" disabled data-i18n="searchBtn">
+        Rechercher les POI
+      </button>
+      <div id="status" class="status"></div>
+    </section>
+
+    <section class="panel" id="results-panel" hidden>
+      <h2>
+        <span data-i18n="results">Résultats</span>
+        <span id="results-count" class="count-badge">0</span>
+      </h2>
+      <div class="export-row">
+        <button id="export-gpx" class="btn-secondary" data-i18n="exportGpx">Export GPX</button>
+        <button id="export-csv" class="btn-secondary" data-i18n="exportCsv">Export CSV</button>
+      </div>
+      <div id="results-list" class="results-list"></div>
+    </section>
+
+    <footer class="sidebar-footer">
+      <span data-i18n="dataSource">Données © OpenStreetMap contributors</span>
+    </footer>
+  </aside>
+
+  <main id="map"></main>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/categories.js"></script>
+  <script src="js/gpx.js"></script>
+  <script src="js/overpass.js"></script>
+  <script src="js/export.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
