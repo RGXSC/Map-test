@@ -144,18 +144,16 @@ async function runSearch() {
 
   try {
     const radiusMeters = parseInt(radiusInput.value, 10) * 1000;
-    // Simplify the track to keep the query small; use a step proportional to
-    // the radius (smaller radius → denser sampling so we don't miss POIs).
-    const step = Math.max(200, Math.min(800, radiusMeters / 2));
-    const simplified = simplifyByDistance(state.trackPoints, step);
-
-    const query = buildOverpassQuery(
-      simplified,
+    const pois = await searchPois(
+      state.trackPoints,
       radiusMeters,
-      Array.from(state.enabledCategories)
+      Array.from(state.enabledCategories),
+      (done, total) => {
+        if (total > 1) {
+          statusEl.textContent = `${t("searchProgress")} ${done}/${total}...`;
+        }
+      }
     );
-    const data = await runOverpassQuery(query);
-    const pois = normalizeElements(data.elements || []);
 
     // Compute distance to track + cumulative km for each POI
     for (const poi of pois) {
